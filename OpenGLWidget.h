@@ -1,6 +1,10 @@
 #pragma once
 
+#include "ShaderProgram.h"
+
 #include <QOpenGLWidget>
+
+#include <memory>
 
 class OpenGLWidget : public QOpenGLWidget
 {
@@ -21,6 +25,8 @@ protected:
   /// @}
 
 private:
+  std::unique_ptr<ShaderProgram> shader_program_;
+
   int32_t width_{1600};
   int32_t height_{900};
 };
