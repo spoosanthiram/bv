@@ -2,8 +2,7 @@
 
 #include <fstream>
 
-Shader::Shader(GLenum shader_type)
-  : shader_type_{shader_type}
+Shader::Shader(GLenum shader_type) : shader_type_{shader_type}
 {
   shader_id_ = OpenGLInterface::get_api()->glCreateShader(shader_type_);
   if (shader_id_ == 0)
@@ -18,14 +17,13 @@ Shader::~Shader()
 
 std::string Shader::get_type_str() const
 {
-  switch (shader_type_)
-  {
-  case GL_VERTEX_SHADER:
-    return "Vertex Shader";
-  case GL_FRAGMENT_SHADER:
-    return "Fragment Shader";
-  default:
-    return "Unknown Shader";
+  switch (shader_type_) {
+    case GL_VERTEX_SHADER:
+      return "Vertex Shader";
+    case GL_FRAGMENT_SHADER:
+      return "Fragment Shader";
+    default:
+      return "Unknown Shader";
   }
 }
 

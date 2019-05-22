@@ -4,8 +4,7 @@
 
 #include <iostream>
 
-OpenGLWidget::OpenGLWidget(QWidget* parent)
-  : QOpenGLWidget{parent}
+OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget{parent}
 {
   constexpr int32_t NUMBER_OF_SAMPLES = 4;
 

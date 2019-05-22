@@ -5,7 +5,7 @@
 #include <exception>
 #include <iostream>
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
   try {
     QApplication app{argc, argv};

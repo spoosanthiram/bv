@@ -12,9 +12,7 @@ public:
   Shader(const Shader& other) = delete;
   Shader& operator=(const Shader& other) = delete;
 
-  Shader(Shader&& other) noexcept
-    : shader_type_{other.shader_type_}
-    , shader_id_{other.shader_id_}
+  Shader(Shader&& other) noexcept : shader_type_{other.shader_type_}, shader_id_{other.shader_id_}
   {
     other.shader_type_ = 0;
     other.shader_id_ = 0;
