@@ -39,6 +39,6 @@ private:
 
 private:
   GLuint program_id_{0};
-  std::vector<Shader> shaders_{};
+  std::vector<Shader> shaders_;
   std::unordered_map<std::string, GLint> location_map_;
 };

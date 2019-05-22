@@ -7,18 +7,18 @@
 
 int main(int argc, char *argv[])
 {
-  QApplication app{argc, argv};
-
   try {
+    QApplication app{argc, argv};
+
     MainWindow main_window;
     main_window.show();
+
+    app.exec();
   }
   catch (std::exception& e) {
     std::cerr << "Exception: " << e.what() << "\n";
     return 1;
   }
-
-  app.exec();
 
   return 0;
 }

@@ -25,6 +25,9 @@ protected:
   /// @}
 
 private:
+  void load_shaders();
+
+private:
   std::unique_ptr<ShaderProgram> shader_program_;
 
   int32_t width_{1600};
