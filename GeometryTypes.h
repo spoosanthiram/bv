@@ -4,9 +4,16 @@
 
 #include <vector>
 
+using Point2i = Eigen::Vector2i;
+using Point2d = Eigen::Vector2d;
+
 using Point3f = Eigen::Vector3f;
-using Point4f = Eigen::Vector4f;
+using Point3d = Eigen::Vector3d;
+
 using Vector3f = Eigen::Vector3f;
+using Vector3d = Eigen::Vector3d;
+
+using Point4f = Eigen::Vector4f;
 
 /// @brief Struct to keep the relevant geometry info that can be
 ///        directly used in a graphics pipeline

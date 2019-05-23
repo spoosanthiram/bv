@@ -4,6 +4,8 @@
 #include "OpenGLInterface.h"
 #include "ShaderProgram.h"
 
+#include <QMouseEvent>
+
 #include <iostream>
 
 OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget{parent}
@@ -83,6 +85,31 @@ void OpenGLWidget::paintGL()
   graphics_object_->render(shader_program_);
 }
 
+void OpenGLWidget::mouseMoveEvent(QMouseEvent* mouse_event)
+{
+  Point2i mouse_position{mouse_event->x(), mouse_event->y()};
+
+  Point2d start_pos = normalize(previous_mouse_position_);
+  Point2d end_pos = normalize(mouse_position);
+
+  viewpoint_camera_.rotate(start_pos, end_pos);
+
+  previous_mouse_position_ = mouse_position;
+
+  update();
+}
+
+void OpenGLWidget::mousePressEvent(QMouseEvent* mouse_event)
+{
+  previous_mouse_position_ = Point2i{mouse_event->x(), mouse_event->y()};
+}
+
+void OpenGLWidget::wheelEvent(QWheelEvent* wheel_event)
+{
+  viewpoint_camera_.zoom(wheel_event->delta() / 100);
+  update();
+}
+
 void OpenGLWidget::load_shaders()
 {
   shader_program_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
@@ -96,4 +123,10 @@ void OpenGLWidget::load_shaders()
   shader_program_->attach_shader(std::move(fragement_shader));
 
   shader_program_->link();
+}
+
+Point2d OpenGLWidget::normalize(const Point2i& position)
+{
+  return Point2d{(2.0 * position.x() - width_) / static_cast<double>(width_),
+                 (height_ - 2.0 * position.y()) / static_cast<double>(height_)};
 }

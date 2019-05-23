@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GeometryTypes.h"
 #include "ViewpointCamera.h"
 
 #include <Eigen/Core>
@@ -23,13 +24,14 @@ protected:
   void resizeGL(int width, int height) override;
   void paintGL() override;
 
-  // void mouseMoveEvent(QMouseEvent* mouse_event) override;
-  // void mousePressEvent(QMouseEvent* mouse_event) override;
-  // void wheelEvent(QWheelEvent* wheel_event) override;
+  void mouseMoveEvent(QMouseEvent* mouse_event) override;
+  void mousePressEvent(QMouseEvent* mouse_event) override;
+  void wheelEvent(QWheelEvent* wheel_event) override;
   /// @}
 
 private:
   void load_shaders();
+  Point2d normalize(const Point2i& position);
 
 private:
   int32_t width_;
@@ -39,4 +41,6 @@ private:
   Eigen::Matrix4d projection_matrix_;
   ViewpointCamera viewpoint_camera_;
   std::unique_ptr<GraphicsObject> graphics_object_;
+
+  Point2i previous_mouse_position_{0, 0};
 };
