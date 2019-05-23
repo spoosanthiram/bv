@@ -5,7 +5,7 @@ in vec4 normal;
 in vec4 color;
 
 const vec4 ambient_light = vec4(0.1, 0.1, 0.1, 0.0);
-const vec3 light_position = vec3(0.0, 0.0, 10.0);
+const vec3 light_position = vec3(0.0, 0.0, 5.0);
 const vec4 light_diffuse_color = vec4(0.9, 0.9, 0.9, 1.0);
 
 out vec4 frag_color;

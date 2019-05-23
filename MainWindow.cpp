@@ -1,6 +1,6 @@
 #include "MainWindow.h"
 
-constexpr int INITIAL_WIDTH = 1600;
+constexpr int INITIAL_WIDTH = 1300;
 constexpr int INITIAL_HEIGHT = 900;
 
 MainWindow::MainWindow()

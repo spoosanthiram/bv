@@ -51,3 +51,27 @@ void ShaderProgram::link() const
     throw std::runtime_error{std::string{"Failed to link the shader program. Error: "} + log};
   }
 }
+
+void ShaderProgram::set_matrix(const std::string& name, const Eigen::Matrix4d& matrix)
+{
+  auto maybe_location = lookup_location(name);
+  if (maybe_location != -1) {
+    Eigen::Matrix4f float_matrix = matrix.cast<float>();
+    OpenGLInterface::get_api()->glUniformMatrix4fv(maybe_location, 1, GL_FALSE, float_matrix.data());
+  }
+}
+
+GLint ShaderProgram::lookup_location(const std::string& name)
+{
+  auto it = location_map_.find(name);
+  if (it != location_map_.end())
+    return it->second;
+
+  auto location = OpenGLInterface::get_api()->glGetUniformLocation(program_id_, name.c_str());
+  if (location == -1)
+    std::cerr << "Could not find '" << name << "' uniform variable.";
+  else
+    location_map_[name] = location;
+
+  return location;
+}

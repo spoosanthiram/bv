@@ -12,19 +12,26 @@ include_directories(3rd_party)
 
 add_executable(BrainViewer
   # Headers
+  GeometryTypes.h
+  GraphicsObject.h
   MainWindow.h
   OpenGLInterface.h
   OpenGLWidget.h
+  RenderObject.h
   Shader.h
   ShaderProgram.h
+  ViewpointCamera.h
 
   # Sources
+  GraphicsObject.cpp
   main.cpp
   MainWindow.cpp
   OpenGLInterface.cpp
   OpenGLWidget.cpp
+  RenderObject.cpp
   Shader.cpp
   ShaderProgram.cpp
+  ViewpointCamera.cpp
 )
 
 target_link_libraries(BrainViewer

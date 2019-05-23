@@ -1,10 +1,14 @@
 #pragma once
 
-#include "ShaderProgram.h"
+#include "ViewpointCamera.h"
 
+#include <Eigen/Core>
 #include <QOpenGLWidget>
 
 #include <memory>
+
+class GraphicsObject;
+class ShaderProgram;
 
 class OpenGLWidget : public QOpenGLWidget
 {
@@ -28,8 +32,11 @@ private:
   void load_shaders();
 
 private:
-  std::unique_ptr<ShaderProgram> shader_program_;
+  int32_t width_;
+  int32_t height_;
 
-  int32_t width_{1600};
-  int32_t height_{900};
+  std::unique_ptr<ShaderProgram> shader_program_;
+  Eigen::Matrix4d projection_matrix_;
+  ViewpointCamera viewpoint_camera_;
+  std::unique_ptr<GraphicsObject> graphics_object_;
 };

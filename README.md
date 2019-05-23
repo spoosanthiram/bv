@@ -1,5 +1,15 @@
-# BViewer
+# Viewer
 
-Prerequest: <br/>
-Qt 5, Get in from http://download.qt.io/official_releases/qt/5.12/5.12.3/ <br/>
-If GL/gl.h not available, apt-get install mesa-common-dev
+## Prerequest:
+- Qt 5, download and install latest, http://download.qt.io/official_releases/qt/
+- Make sure OpenGL headers are available.
+    - In Ubuntu, can be installed like: `sudo apt-get install mesa-common-dev`
+
+## Building
+- clone the repo
+- In the repo directory, create `build` directory i.e `mkdir build`
+- `cmake ..`
+- `make`
+
+## Running
+- Go to the repo directory and run, `./build/BrainViewer`

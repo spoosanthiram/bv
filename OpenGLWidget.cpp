@@ -1,6 +1,8 @@
 #include "OpenGLWidget.h"
 
+#include "GraphicsObject.h"
 #include "OpenGLInterface.h"
+#include "ShaderProgram.h"
 
 #include <iostream>
 
@@ -39,6 +41,8 @@ void OpenGLWidget::initializeGL()
   gl_funcs->glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
   load_shaders();
+
+  graphics_object_ = std::unique_ptr<GraphicsObject>{new GraphicsObject{"model.bin"}};
 }
 
 void OpenGLWidget::resizeGL(int width, int height)
@@ -49,12 +53,34 @@ void OpenGLWidget::resizeGL(int width, int height)
   width_ = width;
   height_ = height;
 
+  constexpr double FOVY = 60.0;
+  constexpr double NEAR = 1.0;
+  constexpr double FAR = 100.0;
+
+  double aspect_ratio = static_cast<double>(width_) / static_cast<double>(height_);
+
+  projection_matrix_.setZero();
+
+  double q = 1.0 / std::tan(0.5 * FOVY * 3.141592653589793 / 180.0);
+  projection_matrix_(0, 0) = q / aspect_ratio;
+  projection_matrix_(1, 1) = q;
+  projection_matrix_(2, 2) = (NEAR + FAR) / (NEAR - FAR);
+  projection_matrix_(2, 3) = -1.0;
+  projection_matrix_(3, 2) = (2.0 * NEAR * FAR) / (NEAR - FAR);
+
   OpenGLInterface::get_api()->glViewport(0, 0, width_, height_);
 }
 
 void OpenGLWidget::paintGL()
 {
-  OpenGLInterface::get_api()->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  auto gl_funcs = OpenGLInterface::get_api();
+
+  gl_funcs->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  gl_funcs->glUseProgram(shader_program_->get_program_id());
+  shader_program_->set_matrix("projection_matrix", projection_matrix_);
+  shader_program_->set_matrix("model_view_matrix", viewpoint_camera_.get_view_matrix());
+  graphics_object_->render(shader_program_);
 }
 
 void OpenGLWidget::load_shaders()
