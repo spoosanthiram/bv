@@ -54,11 +54,18 @@ void ShaderProgram::link() const
 
 void ShaderProgram::set_matrix(const std::string& name, const Eigen::Matrix4d& matrix)
 {
-  auto maybe_location = lookup_location(name);
-  if (maybe_location != -1) {
+  auto location = lookup_location(name);
+  if (location != -1) {
     Eigen::Matrix4f float_matrix = matrix.cast<float>();
-    OpenGLInterface::get_api()->glUniformMatrix4fv(maybe_location, 1, GL_FALSE, float_matrix.data());
+    OpenGLInterface::get_api()->glUniformMatrix4fv(location, 1, GL_FALSE, float_matrix.data());
   }
+}
+
+void ShaderProgram::set_color(const std::string& name, const Point4f& color)
+{
+  auto location = lookup_location(name);
+  if (location != -1)
+    OpenGLInterface::get_api()->glUniform4fv(location, 1, color.data());
 }
 
 GLint ShaderProgram::lookup_location(const std::string& name)

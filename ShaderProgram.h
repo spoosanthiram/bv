@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GeometryTypes.h"
 #include "OpenGLInterface.h"
 #include "Shader.h"
 
@@ -31,6 +32,8 @@ public:
 
   /// @brief Set the GLSL uniform matrix 4x4 value
   void set_matrix(const std::string& name, const Eigen::Matrix4d& matrix);
+
+  void set_color(const std::string& name, const Point4f& color);
 
 private:
   /// @brief Look up GLSL uniform location id in the stored map.

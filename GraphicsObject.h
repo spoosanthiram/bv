@@ -18,4 +18,5 @@ private:
 
 private:
   RenderObject render_object_;
+  RenderObject render_object2_;
 };

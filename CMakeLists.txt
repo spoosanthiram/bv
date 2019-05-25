@@ -18,6 +18,7 @@ add_executable(BrainViewer
   OpenGLInterface.h
   OpenGLWidget.h
   RenderObject.h
+  RenderObject2.h
   Shader.h
   ShaderProgram.h
   ViewpointCamera.h
@@ -29,6 +30,7 @@ add_executable(BrainViewer
   OpenGLInterface.cpp
   OpenGLWidget.cpp
   RenderObject.cpp
+  RenderObject2.cpp
   Shader.cpp
   ShaderProgram.cpp
   ViewpointCamera.cpp
