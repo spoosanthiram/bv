@@ -5,7 +5,8 @@
 #include <QMainWindow>
 #include <QPointer>
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
 public:
   MainWindow();
   ~MainWindow() = default;
@@ -14,7 +15,7 @@ public:
   void update();
 
 protected:
-  void closeEvent(QCloseEvent *close_event) override;
+  void closeEvent(QCloseEvent* close_event) override;
 
 private:
   QPointer<OpenGLWidget> gl_view_;

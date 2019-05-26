@@ -13,11 +13,9 @@ GraphicsObject::GraphicsObject(const std::string& file_path)
   // create highlight object
   std::unordered_map<uint32_t, uint32_t> index_map;
   GraphicsGeometry graphics_geometry2;
-  for (uint32_t i = 0; i < 6000; ++i)
-  {
+  for (uint32_t i = 0; i < 6000; ++i) {
     auto index = graphics_geometry.indices[i];
-    if (index_map.find(index) == index_map.end())
-    {
+    if (index_map.find(index) == index_map.end()) {
       index_map[index] = graphics_geometry2.vertex_positions.size();
 
       graphics_geometry2.vertex_positions.push_back(graphics_geometry.vertex_positions[index]);

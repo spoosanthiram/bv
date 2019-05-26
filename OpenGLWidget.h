@@ -12,9 +12,10 @@
 class GraphicsObject;
 class ShaderProgram;
 
-class OpenGLWidget : public QOpenGLWidget {
+class OpenGLWidget : public QOpenGLWidget
+{
 public:
-  OpenGLWidget(QWidget *parent);
+  OpenGLWidget(QWidget* parent);
   ~OpenGLWidget() = default;
 
   void update_graphics_object();
@@ -26,14 +27,14 @@ protected:
   void resizeGL(int width, int height) override;
   void paintGL() override;
 
-  void mouseMoveEvent(QMouseEvent *mouse_event) override;
-  void mousePressEvent(QMouseEvent *mouse_event) override;
-  void wheelEvent(QWheelEvent *wheel_event) override;
+  void mouseMoveEvent(QMouseEvent* mouse_event) override;
+  void mousePressEvent(QMouseEvent* mouse_event) override;
+  void wheelEvent(QWheelEvent* wheel_event) override;
   /// @}
 
 private:
   void load_shaders();
-  Point2d normalize(const Point2i &position);
+  Point2d normalize(const Point2i& position);
 
 private:
   int32_t width_;

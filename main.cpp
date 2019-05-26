@@ -15,8 +15,7 @@ int main(int argc, char* argv[])
     MainWindow main_window;
     main_window.show();
 
-    while (true)
-    {
+    while (true) {
       main_window.update();
       app.processEvents();
 

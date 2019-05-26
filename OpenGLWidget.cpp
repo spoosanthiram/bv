@@ -131,32 +131,32 @@ void OpenGLWidget::wheelEvent(QWheelEvent* wheel_event)
 void OpenGLWidget::load_shaders()
 {
   {
-  shader_program_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
+    shader_program_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
 
-  Shader vertex_shader{GL_VERTEX_SHADER};
-  vertex_shader.compile("bv.vert");
-  shader_program_->attach_shader(std::move(vertex_shader));
+    Shader vertex_shader{GL_VERTEX_SHADER};
+    vertex_shader.compile("bv.vert");
+    shader_program_->attach_shader(std::move(vertex_shader));
 
-  Shader fragement_shader{GL_FRAGMENT_SHADER};
-  fragement_shader.compile("bv.frag");
-  shader_program_->attach_shader(std::move(fragement_shader));
+    Shader fragement_shader{GL_FRAGMENT_SHADER};
+    fragement_shader.compile("bv.frag");
+    shader_program_->attach_shader(std::move(fragement_shader));
 
-  shader_program_->link();
+    shader_program_->link();
   }
 
   // highlight shader
   {
-  shader_program2_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
+    shader_program2_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
 
-  Shader vertex_shader{GL_VERTEX_SHADER};
-  vertex_shader.compile("bv2.vert");
-  shader_program2_->attach_shader(std::move(vertex_shader));
+    Shader vertex_shader{GL_VERTEX_SHADER};
+    vertex_shader.compile("bv2.vert");
+    shader_program2_->attach_shader(std::move(vertex_shader));
 
-  Shader fragement_shader{GL_FRAGMENT_SHADER};
-  fragement_shader.compile("bv2.frag");
-  shader_program2_->attach_shader(std::move(fragement_shader));
+    Shader fragement_shader{GL_FRAGMENT_SHADER};
+    fragement_shader.compile("bv2.frag");
+    shader_program2_->attach_shader(std::move(fragement_shader));
 
-  shader_program2_->link();
+    shader_program2_->link();
   }
 }
 

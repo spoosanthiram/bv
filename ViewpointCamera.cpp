@@ -34,12 +34,10 @@ Vector3d ViewpointCamera::project_to_sphere(const Point2d& position) const
 {
   Vector3d pos_on_sphere{position.x(), position.y(), 0.0};
   double norm = pos_on_sphere.norm();
-  if (norm > 1.0)
-  {
+  if (norm > 1.0) {
     pos_on_sphere.normalize();
   }
-  else
-  {
+  else {
     pos_on_sphere[2] = std::sqrt(1.0 - norm * norm);
   }
 
