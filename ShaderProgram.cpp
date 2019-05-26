@@ -76,7 +76,7 @@ GLint ShaderProgram::lookup_location(const std::string& name)
 
   auto location = OpenGLInterface::get_api()->glGetUniformLocation(program_id_, name.c_str());
   if (location == -1)
-    std::cerr << "Could not find '" << name << "' uniform variable.";
+    std::cerr << "Could not find '" << name << "' uniform variable.\n";
   else
     location_map_[name] = location;
 

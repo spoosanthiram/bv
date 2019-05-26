@@ -2,8 +2,6 @@
 
 #include "ShaderProgram.h"
 
-#include <iostream>
-
 constexpr uint32_t SHADER_VERTEX_POSITION = 0;
 constexpr uint32_t SHADER_VERTEX_NORMAL = 1;
 
@@ -107,7 +105,6 @@ void RenderObject2::render(const std::unique_ptr<ShaderProgram>& shader_program)
   auto gl_funcs = OpenGLInterface::get_api();
 
   shader_program->set_color("color", color_);
-  std::cout << "color: [" << color_[0] << ", " << color_[1] << ", " << color_[2] << ", " << color_[3] << "]\n";
 
   gl_funcs->glBindVertexArray(vao_);
   gl_funcs->glDrawElements(GL_TRIANGLES, indices_size_, GL_UNSIGNED_INT, nullptr);

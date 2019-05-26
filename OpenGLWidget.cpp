@@ -25,7 +25,7 @@ OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget{parent}
   Point4f color{0.0f, 0.0f, 0.0f, 1.0f};
   for (float x = 0.0; x < pi; x += 0.031415927) {
     color[0] = std::sin(x);
-    // color[1] = std::abs(std::cos(x));
+    color[1] = std::abs(std::cos(x));
     highlight_colors_.push_back(color);
   }
 }
@@ -35,8 +35,6 @@ void OpenGLWidget::update_graphics_object()
   graphics_object_->set_highlight_color(highlight_colors_[highlight_color_index_]);
   ++highlight_color_index_;
   highlight_color_index_ %= highlight_colors_.size();
-
-  std::cout << "highlight_color_index_ = " << highlight_color_index_ << "\n";
 
   update();
 }
@@ -103,6 +101,10 @@ void OpenGLWidget::paintGL()
   shader_program_->set_matrix("projection_matrix", projection_matrix_);
   shader_program_->set_matrix("model_view_matrix", viewpoint_camera_.get_view_matrix());
   graphics_object_->render(shader_program_);
+
+  gl_funcs->glUseProgram(shader_program2_->get_program_id());
+  shader_program2_->set_matrix("projection_matrix", projection_matrix_);
+  shader_program2_->set_matrix("model_view_matrix", viewpoint_camera_.get_view_matrix());
   graphics_object_->render_highlight(shader_program2_);
 }
 
