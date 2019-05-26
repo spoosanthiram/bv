@@ -6,12 +6,14 @@
 GraphicsObject::GraphicsObject(const std::string& file_path)
 {
   const auto graphics_geometry = read_model(file_path);
+
+  // create render object
   render_object_.init(graphics_geometry);
 
-  // create 2nd render object
+  // create highlight object
   std::unordered_map<uint32_t, uint32_t> index_map;
   GraphicsGeometry graphics_geometry2;
-  for (uint32_t i = 0; i < 1800; ++i)
+  for (uint32_t i = 0; i < 6000; ++i)
   {
     auto index = graphics_geometry.indices[i];
     if (index_map.find(index) == index_map.end())
@@ -20,7 +22,6 @@ GraphicsObject::GraphicsObject(const std::string& file_path)
 
       graphics_geometry2.vertex_positions.push_back(graphics_geometry.vertex_positions[index]);
       graphics_geometry2.vertex_normals.push_back(graphics_geometry.vertex_normals[index]);
-      graphics_geometry2.vertex_colors.push_back(Point4f{1.0f, 1.0f, 1.0f, 1.0f});
     }
     graphics_geometry2.indices.push_back(index_map[index]);
   }
@@ -31,7 +32,11 @@ GraphicsObject::GraphicsObject(const std::string& file_path)
 void GraphicsObject::render(const std::unique_ptr<ShaderProgram>& shader_program) const
 {
   render_object_.render(shader_program);
-  render_object2_.render(shader_program);
+}
+
+void GraphicsObject::render_highlight(const std::unique_ptr<ShaderProgram>& shader_program2) const
+{
+  render_object2_.render(shader_program2);
 }
 
 GraphicsGeometry GraphicsObject::read_model(const std::string& file_path) const

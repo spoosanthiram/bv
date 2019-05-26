@@ -32,6 +32,8 @@ void Shader::compile(const std::string& file_path)
   auto gl_api = OpenGLInterface::get_api();
 
   std::ifstream input_stream{file_path};
+  if (!input_stream)
+    throw std::runtime_error{"Could not open shader file " + file_path};
   std::string file_content{std::istreambuf_iterator<char>{input_stream}, std::istreambuf_iterator<char>{}};
 
   auto source = file_content.c_str();

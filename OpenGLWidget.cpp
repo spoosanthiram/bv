@@ -6,6 +6,7 @@
 
 #include <QMouseEvent>
 
+#include <cmath>
 #include <iostream>
 
 OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget{parent}
@@ -19,6 +20,25 @@ OpenGLWidget::OpenGLWidget(QWidget* parent) : QOpenGLWidget{parent}
   format.setSwapBehavior(QSurfaceFormat::DoubleBuffer);
   format.setSamples(NUMBER_OF_SAMPLES);
   setFormat(format);
+
+  constexpr float pi = 3.14159265358979323846f;
+  Point4f color{0.0f, 0.0f, 0.0f, 1.0f};
+  for (float x = 0.0; x < pi; x += 0.031415927) {
+    color[0] = std::sin(x);
+    // color[1] = std::abs(std::cos(x));
+    highlight_colors_.push_back(color);
+  }
+}
+
+void OpenGLWidget::update_graphics_object()
+{
+  graphics_object_->set_highlight_color(highlight_colors_[highlight_color_index_]);
+  ++highlight_color_index_;
+  highlight_color_index_ %= highlight_colors_.size();
+
+  std::cout << "highlight_color_index_ = " << highlight_color_index_ << "\n";
+
+  update();
 }
 
 void OpenGLWidget::initializeGL()
@@ -83,6 +103,7 @@ void OpenGLWidget::paintGL()
   shader_program_->set_matrix("projection_matrix", projection_matrix_);
   shader_program_->set_matrix("model_view_matrix", viewpoint_camera_.get_view_matrix());
   graphics_object_->render(shader_program_);
+  graphics_object_->render_highlight(shader_program2_);
 }
 
 void OpenGLWidget::mouseMoveEvent(QMouseEvent* mouse_event)
@@ -95,8 +116,6 @@ void OpenGLWidget::mouseMoveEvent(QMouseEvent* mouse_event)
   viewpoint_camera_.rotate(start_pos, end_pos);
 
   previous_mouse_position_ = mouse_position;
-
-  update();
 }
 
 void OpenGLWidget::mousePressEvent(QMouseEvent* mouse_event)
@@ -107,11 +126,11 @@ void OpenGLWidget::mousePressEvent(QMouseEvent* mouse_event)
 void OpenGLWidget::wheelEvent(QWheelEvent* wheel_event)
 {
   viewpoint_camera_.zoom(wheel_event->delta() / 100);
-  update();
 }
 
 void OpenGLWidget::load_shaders()
 {
+  {
   shader_program_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
 
   Shader vertex_shader{GL_VERTEX_SHADER};
@@ -123,6 +142,22 @@ void OpenGLWidget::load_shaders()
   shader_program_->attach_shader(std::move(fragement_shader));
 
   shader_program_->link();
+  }
+
+  // highlight shader
+  {
+  shader_program2_ = std::unique_ptr<ShaderProgram>{new ShaderProgram{}};
+
+  Shader vertex_shader{GL_VERTEX_SHADER};
+  vertex_shader.compile("bv2.vert");
+  shader_program2_->attach_shader(std::move(vertex_shader));
+
+  Shader fragement_shader{GL_FRAGMENT_SHADER};
+  fragement_shader.compile("bv2.frag");
+  shader_program2_->attach_shader(std::move(fragement_shader));
+
+  shader_program2_->link();
+  }
 }
 
 Point2d OpenGLWidget::normalize(const Point2i& position)

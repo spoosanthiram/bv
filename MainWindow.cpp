@@ -11,3 +11,13 @@ MainWindow::MainWindow()
   gl_view_ = new OpenGLWidget{this};
   setCentralWidget(gl_view_);
 }
+
+void MainWindow::update()
+{
+  gl_view_->update_graphics_object();
+}
+
+void MainWindow::closeEvent(QCloseEvent* close_event)
+{
+  window_closed_ = true;
+}
